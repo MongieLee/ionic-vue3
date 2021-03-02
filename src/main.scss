@@ -1,0 +1,30 @@
+.redStart {
+  color: red;
+  margin-right: 0.4em;
+}
+
+a {
+  text-decoration: none;
+}
+
+html:not(.hydrated) body {
+  display: block;
+}
+
+.back-button {
+  margin-left: 0.5em;
+}
+
+.z-11 {
+  z-index: 11;
+}
+
+.z-12 {
+  z-index: 12;
+}
+
+.i-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}

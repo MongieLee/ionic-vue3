@@ -1,5 +1,5 @@
 <template>
-  <ion-page>
+  <div>
     <ion-content :fullscreen="true" class="login-wrapper">
       <ion-card class="login-container">
         <h1>珠海百智科技</h1>
@@ -28,13 +28,12 @@
         </div>
       </ion-card>
     </ion-content>
-  </ion-page>
+  </div>
 </template>
 
 <script lang="ts">
 import {
   IonContent,
-  IonPage,
   loadingController,
   IonInput,
   IonButton,
@@ -51,7 +50,6 @@ export default defineComponent({
   name: "Home",
   components: {
     IonContent,
-    IonPage,
     IonInput,
     IonButton,
     IonCard,

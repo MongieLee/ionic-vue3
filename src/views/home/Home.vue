@@ -1,34 +1,24 @@
 <template>
-  <ion-page>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>工作台</ion-title>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content class="container" :fullscreen="true">
-      <ul class="menu-list">
-        <li
-          v-for="(item, index) in menuList"
-          :key="index"
-          @click="item.onClick"
-        >
-          <ion-icon size="large" :icon="item.icon" />
-          <span>{{ item.title }}</span>
-        </li>
-      </ul>
-      <button @click="goLogin">去登录</button>
-      <!-- <Map
-        :akey="aMapKey"
-        :onError="handleError"
-        :onComplete="handleComplete"
-      /> -->
-    </ion-content>
-  </ion-page>
+  <div class="child-view">
+    <router-view />
+  </div>
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>工作台</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="container" :fullscreen="true">
+    <ul class="menu-list">
+      <li v-for="(item, index) in menuList" :key="index" @click="item.onClick">
+        <ion-icon size="large" :icon="item.icon" />
+        <span>{{ item.title }}</span>
+      </li>
+    </ul>
+  </ion-content>
 </template>
 
 <script lang="ts">
 import {
-  IonPage,
   IonHeader,
   IonToolbar,
   IonTitle,
@@ -42,7 +32,7 @@ import {
   airplaneSharp,
   alarmSharp,
   walkSharp,
-  personAddSharp,
+  personRemoveSharp,
 } from "ionicons/icons";
 
 export default defineComponent({
@@ -52,7 +42,6 @@ export default defineComponent({
     IonToolbar,
     IonTitle,
     IonContent,
-    IonPage,
     IonIcon,
   },
   setup() {
@@ -88,7 +77,7 @@ export default defineComponent({
       },
       {
         title: "请假",
-        icon: personAddSharp,
+        icon: personRemoveSharp,
         onClick() {
           router.push("/home/createForm/4");
         },
@@ -145,5 +134,11 @@ export default defineComponent({
       }
     }
   }
+}
+.child-view {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  border: 1px solid red;
 }
 </style>

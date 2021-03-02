@@ -1,20 +1,40 @@
 <template>
-  <ion-page>
-    <ion-header>
+  <div class="i-container">
+    <ion-header class="z-11">
       <ion-toolbar>
-        <ion-buttons slot="start">
-          <ion-back-button default-href="home" />
-        </ion-buttons>
+        <ion-icon
+          class="back-button"
+          slot="start"
+          size="large"
+          :icon="arrowBackOutline"
+          @click="backPre"
+        />
         <ion-title>签到考勤</ion-title>
       </ion-toolbar>
     </ion-header>
-    <div id="mapContainer"></div>
+    <div id="mapContainer" class="z-11">
+      <ion-card class="list-card">
+        <ion-card-header>
+          <ion-card-title>今日考勤记录</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content class="clock-log-list">
+          <div v-if="clockLog.logData.length > 0">
+            <p v-for="item in clockLog.logData" :key="item.Id">
+              {{ formatTime(item.CheckTime) }}
+              <span class="span-mg-left">{{ item.AreaName }}</span>
+            </p>
+          </div>
+          <span v-else>暂无数据</span>
+        </ion-card-content>
+      </ion-card>
+    </div>
     <ion-fab vertical="buttom" horizontal="center" slot="fixed" class="fixed">
       <ion-fab-button @click="onClock">
         <ion-icon :icon="fingerPrint" />
       </ion-fab-button>
     </ion-fab>
-  </ion-page>
+  </div>
 </template>
 
 <script lang='ts'>
@@ -22,16 +42,20 @@ import {
   IonHeader,
   IonToolbar,
   IonTitle,
-  IonPage,
-  IonButtons,
-  IonBackButton,
   IonFab,
   loadingController,
+  IonFabButton,
+  IonIcon,
+  IonCard,
+  IonCardHeader,
+  IonCardTitle,
+  IonCardContent,
 } from "@ionic/vue";
-import { fingerPrint } from "ionicons/icons";
+import { fingerPrint, arrowBackOutline } from "ionicons/icons";
 import { onMounted, reactive, defineComponent, onUnmounted } from "vue";
 import showToast from "@/utils/showToast";
 import clockApi from "@/api/clockApi";
+import { useRouter } from "vue-router";
 
 interface GeolocationResult {
   position: {
@@ -74,19 +98,43 @@ export default defineComponent({
     IonHeader,
     IonToolbar,
     IonTitle,
-    IonPage,
-    IonButtons,
-    IonBackButton,
     IonFab,
+    IonFabButton,
+    IonIcon,
+    IonCard,
+    IonCardHeader,
+    IonCardTitle,
+    IonCardContent,
   },
   setup(props) {
+    const router = useRouter();
     const coordinate: Coordinate = reactive({
       longitude: 0,
       latitude: 0,
     });
+    const clockLog = reactive({
+      logData: [],
+    });
 
     let map: any;
-
+    const backPre = () => {
+      router.push("/home");
+    };
+    const formatTime = (timeStr: string) => {
+      const newStr = new Date(timeStr);
+      const h =
+        newStr.getHours() < 10 ? "0" + newStr.getHours() : newStr.getHours();
+      const m =
+        newStr.getMinutes() < 10
+          ? "0" + newStr.getMinutes()
+          : newStr.getMinutes();
+      const s =
+        newStr.getSeconds() < 10
+          ? "0" + newStr.getSeconds()
+          : newStr.getSeconds();
+      const str = `${h}:${m}:${s}`;
+      return str;
+    };
     const onClock = async () => {
       if (!coordinate?.longitude || !coordinate?.latitude) {
         showToast({
@@ -129,6 +177,9 @@ export default defineComponent({
             message: "打卡成功！",
             color: "success",
           });
+          clockApi.getClockLog().then((e: any) => {
+            clockLog.logData = e.Result;
+          });
         })
         .catch(() => {
           loading.dismiss();
@@ -143,6 +194,9 @@ export default defineComponent({
     });
 
     onMounted(() => {
+      clockApi.getClockLog().then((e: any) => {
+        clockLog.logData = e.Result;
+      });
       if (typeof AMap !== "undefined") {
         //脚步异步加载后全局上下文会存在AMap对象，已存在则不再加载，仅执行创建地图实例
         // eslint-disable-next-line @typescript-eslint/no-use-before-define
@@ -196,7 +250,14 @@ export default defineComponent({
         createAMap();
       };
     });
-    return { fingerPrint, onClock };
+    return {
+      fingerPrint,
+      onClock,
+      arrowBackOutline,
+      clockLog,
+      formatTime,
+      backPre,
+    };
   },
 });
 </script>
@@ -204,8 +265,22 @@ export default defineComponent({
 <style lang="scss" scoped>
 #mapContainer {
   height: 100%;
+  position: relative;
+  .list-card {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 2;
+  }
+  .span-mg-left {
+    margin-left: 2em;
+  }
+  .clock-log-list {
+    max-height: 93px;
+    overflow: auto;
+  }
 }
 .fixed {
-  bottom: 8%;
+  bottom: 10%;
 }
 </style>

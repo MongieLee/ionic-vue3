@@ -11,10 +11,14 @@ interface ClockInParams extends Coordinate {
 
 const URL = {
   clockIn: "api/services/system/Attendance/clock", //签到打卡
+  getClockLog: "/api/services/system/Attendance/DaySummary",
 };
 
 export default {
   clockIn(params: ClockInParams) {
     return request(URL.clockIn, "get", {}, params);
+  },
+  getClockLog() {
+    return request(URL.getClockLog, "get");
   },
 };
