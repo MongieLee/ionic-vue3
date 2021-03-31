@@ -12,9 +12,12 @@
   "dependencies": {
     "@capacitor/android": "^2.4.6",
     "@capacitor/core": "2.4.6",
+    "@ionic-native/core": "^5.31.1",
     "@ionic/vue": "^5.4.0",
     "@ionic/vue-router": "^5.4.0",
     "axios": "^0.21.1",
+    "cordova-plugin-badge": "^0.8.8",
+    "cordova-plugin-device": "^2.0.3",
     "core-js": "^3.6.5",
     "dayjs": "^1.10.4",
     "qs": "^6.9.6",

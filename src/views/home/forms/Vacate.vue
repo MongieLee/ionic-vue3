@@ -80,6 +80,7 @@ import {
   IonToolbar,
   IonButton,
   IonTextarea,
+  IonIcon,
   IonSelect,
   IonSelectOption,
 } from "@ionic/vue";
@@ -98,6 +99,7 @@ export default defineComponent({
     IonButton,
     IonToolbar,
     IonTextarea,
+    IonIcon,
     IonSelect,
     IonSelectOption,
   },

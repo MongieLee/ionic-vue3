@@ -54,6 +54,7 @@
 <script lang="ts">
 import { defineComponent, reactive } from "vue";
 import {
+  IonIcon,
   IonItem,
   IonLabel,
   IonDatetime,
@@ -79,6 +80,7 @@ export default defineComponent({
     IonButton,
     IonTextarea,
     IonToolbar,
+    IonIcon,
   },
   setup() {
     const router = useRouter();

@@ -64,6 +64,7 @@ import {
   IonToolbar,
   IonButton,
   IonSelect,
+  IonIcon,
   IonSelectOption,
 } from "@ionic/vue";
 import showToast from "@/utils/showToast";
@@ -80,6 +81,7 @@ export default defineComponent({
     IonToolbar,
     IonButton,
     IonSelectOption,
+    IonIcon,
     IonSelect,
   },
   setup() {

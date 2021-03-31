@@ -62,6 +62,7 @@ import {
   IonToolbar,
   IonContent,
   IonButton,
+  IonIcon,
   IonTextarea,
 } from "@ionic/vue";
 import showToast from "@/utils/showToast";
@@ -78,6 +79,7 @@ export default defineComponent({
     IonContent,
     IonButton,
     IonTextarea,
+    IonIcon,
     IonToolbar,
   },
   setup() {
